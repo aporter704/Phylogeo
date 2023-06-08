@@ -1,0 +1,9 @@
+# Mac cruft
+*DS_Store
+
+# R stuff
+*.RData
+
+# older plotting scripts kept locally for reference
+*DTA_jumpDensityplots.R
+*circlePlotAsh.R
