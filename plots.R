@@ -75,8 +75,9 @@ data %>%
     filter(combo %in% mapStates$combo) %>%
     mutate(jump = paste0(from, " -> ", to)) %>%
     mutate(date = as.Date(date_decimal((decimal_date(dmy("31-05-2020")) - time)))) %>%
-    filter(id == "location.Feb_VIC_travelHistory_rep1") %>%
+    filter(grepl(pattern = "location.Feb_VIC_travelHistory_rep", id)) %>%
     ggplot(aes(x = date, fill = jump)) +
+    facet_wrap(~ id) +
     geom_area(stat = "bin", binwidth = 7) +
     scale_fill_manual(values = viridis_pal(option = "plasma")(8), name = "") +
     scale_x_date(labels = scales::date_format("%b %Y")) +
@@ -86,8 +87,9 @@ data %>%
     geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("05-03-2020")))), color = "darkblue", linetype = "dashed") +
     geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("11-03-2020")))), color = "deeppink", linetype = "dashed") +
     geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("20-03-2020")))), color = "grey", linetype = "dashed") +
+    geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("28-03-2020")))), color = "black", linetype = "dashed") +
     theme_minimal()
-ggsave("mapJumpTraj.svg")
+ggsave("ausImportTraj.svg")
 
 ## final circular plot
 # rep 1
@@ -168,7 +170,8 @@ data %>%
     mutate(
 		date = as.Date(date_decimal((decimal_date(dmy("31-05-2020")) - time)))
 	) %>%
-    filter(id == "location.Feb_VIC_travelHistory_rep1") %>%
+    #filter(id == "location.Feb_VIC_travelHistory_rep1") %>%
+    filter(grepl(pattern = "location.Feb_VIC_travelHistory_rep", id)) %>%
     mutate(direction = case_when(
         to == "Australia" ~ "import",
         from == "Australia" ~ "export",
@@ -176,6 +179,7 @@ data %>%
     )) %>%
     filter(direction %in% c("import", "export")) %>%
     ggplot(aes(x = date, fill = direction)) +
+    facet_wrap(~ id) +
     geom_area(stat = "bin", binwidth = 7) +
     scale_fill_manual(values = viridis_pal(option = "plasma")(4), name = "") +
     scale_x_date(labels = scales::date_format("%b %Y")) +
@@ -187,7 +191,7 @@ data %>%
     geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("20-03-2020")))), color = "grey", linetype = "dashed") +
     geom_vline(xintercept = as.Date(date_decimal(decimal_date(dmy("28-03-2020")))), color = "black", linetype = "dashed") +
     theme_minimal()
-ggsave("mapJumpAusImportAndExport.svg")
+ggsave("ausImportExportTraj.svg")
 
 
 #########################################################
