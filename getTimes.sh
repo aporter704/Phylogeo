@@ -1,5 +1,11 @@
 #!/bin/bash
 
+###########################################################################
+##### This is a wrapper for a .pl script that pulls jump times from   #####
+##### log files from DTA* output in BEAST v1. Can be found at:        #####
+##### Accessed 13-06-23: https://beast.community/markov_jumps_rewards #####
+###########################################################################
+
 # looping through log files to get jump times with collect_times script
 # applying 40000000 burnin steps to each, over 10% for each analysis
 
